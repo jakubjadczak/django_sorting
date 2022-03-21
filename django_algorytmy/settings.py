@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'algorithms.apps.AlgorithmsConfig',
+
     'sorl.thumbnail',
     'crispy_forms',
     'django_extensions',

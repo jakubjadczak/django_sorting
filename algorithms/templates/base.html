@@ -10,6 +10,20 @@
     {% block styles %} {% endblock %}
 </head>
 <body>
+<header>
+    <nav class="py-2 bg-light border-bottom">
+    <div class="container d-flex flex-wrap">
+    <ul class="nav me-auto">
+        <li class="nav-item"><a href="{% url 'algor:choose' %}" class="nav-link link-dark px-2 active" aria-current="page">Strona główna</a></li>
+      </ul>
+    </div>
+    <div class="container d-flex flex-wrap justify-content-center">
+      <a href="/" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
+        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+        <span class="fs-4">Algorytmy Sortowania</span>
+      </a>
+    </div>
+</header>
 <br>
 <div class="container">
       {% if messages %}
@@ -30,14 +44,6 @@
       {% endblock %}
   </div>
 
-<div class="px-4 py-5 my-5 text-center">
-        <div class="col-lg-6 mx-auto">
-          <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-            <a href="#" class="btn btn-primary btn-lg px-4 gap-3">Merge Sort</a>
-            <a href="#" class="btn btn-primary btn-lg px-4 gap-3">Insertion Sort</a>
-            <a href="#" class="btn btn-primary btn-lg px-4 gap-3">Quick Sort</a>
-            <a href="#" class="btn btn-primary btn-lg px-4 gap-3">Merge Sort</a>
-            <a href="#" class="btn btn-primary btn-lg px-4 gap-3">Heap Sort</a>
 
 <footer>
     <div class="container">
@@ -46,7 +52,7 @@
       <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
         <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
       </a>
-      <span class="text-muted">© 2022</span>
+      <span class="text-muted">Algorytmy i struktury danych 2022</span>
     </div>
 
   </footer>

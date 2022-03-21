@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <h1>Algorytm Merge Sort</h1> <br>
+     <form class="ui large form" method="post" action="{% url 'algor:merge' %}">
+    {% csrf_token %}
+      <div style="width:800px; margin:0 auto;">
+        <h4 class="mb-3">Wprowadź dane</h4>
+        <form class="needs-validation" novalidate="">
+            <div class="col-12">
+              <label for="seq" class="form-label">Ciąg wejściowy(liczby oddzielone spacjami)<span class="text-muted"></span></label>
+              <input type="text" class="form-control" id="seq" name="seq" placeholder="1 12 34 5 673 8">
+    <br>
+
+    <h4>Lub wylosuj ciąg do sortowania</h4>
+
+      <select class="form-select" aria-label="Default select example" name="select_seq">
+      <option selected>Wybierz rodzaj ciągu</option>
+      <option value="A">A</option>
+      <option value="V">V</option>
+      <option value="increase">Rosnący</option>
+      <option value="decrease">Malejący</option>
+      <option value="random">Losowy</option>
+    </select>
+    <br>
+    <label for="length" class="form-label">Długość ciągu(max milion)<span class="text-muted"></span></label>
+    <input type="number" class="form-control" id="length" name="length" placeholder="2500"><br>
+    </div>
+    <button class="btn btn-primary btn-lg px-4 gap-3">Sortuj</button><br><br>
+    </form>
+      </div>
+     </form>
+
+    <div class="row align-items-md-stretch">
+        <div class="h-100 p-5 text-white bg-dark rounded-3">
+          <h2>Czas w sekundach: </h2>
+          <h2>Liczba opercaji porównania: </h2>
+          <h3>Ciąg wejściowy: </h3>
+          <h3>Ciąg wyjściowy: </h3>
+          <h3>Liczba scaleń podzbiorów: </h3>
+
+        </div>
+      </div>
+
+    <div class="px-4 py-5 my-5 text-center">
+        <div class="col-lg-6 mx-auto">
+          <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <a href="#" class="btn btn-primary btn-lg px-4 gap-3">Testy</a>
+          </div>
+        </div>
+       </div>
+{% endblock %}
