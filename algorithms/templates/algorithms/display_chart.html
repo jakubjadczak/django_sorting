@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load thumbnail %}
+{% block title %}Chart{% endblock %}
+
+{% block content %}
+        {% thumbnail name "1000x400" as im %}
+          <img src="{{ im.url }}" alt="...">
+          {% endthumbnail %}
+{% endblock %}
