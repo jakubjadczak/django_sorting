@@ -15,8 +15,10 @@ def delta_time(func):
 
 @delta_time
 def shell_sort(T: list):
-    counter = 0
+    comp = 0
+    swap = 0
     knuth = 1
+    knuths = []
     n = len(T)
     while knuth < n:
         knuth = knuth * 3 + 1
@@ -25,13 +27,15 @@ def shell_sort(T: list):
         knuth //= 3
 
     while knuth > 0:
+        knuths.append(knuth)
         for i in range(knuth, n):
             j = i
             mem = T[i]
-            counter += 1
+            comp += 1
             while j >= knuth:
+                comp += 1
                 if T[j-knuth] < mem:
-                    counter += 1
+                    swap += 1
                     T[j] = T[j - knuth]
                     j -= knuth
                 else:
@@ -39,36 +43,35 @@ def shell_sort(T: list):
             T[j] = mem
         knuth //= 3
 
-    return T
+    return T, knuths, comp, swap
 
 
 @delta_time
-def quick_sort(T, left, right, operations=0, pivots=None):
+def quick_sort(T, left, right, comp=0, swap=0, pivots=None):
     if pivots is None:
         pivots = []
 
     p, q = left, right
     pivot = T[right]
     pivots.append(pivot)
-    operations += 1
     while p <= q:
-        operations += 1
+        comp += 1
         while T[p] > pivot:
             p += 1
-        operations += 1
+        comp += 1
         while T[q] < pivot:
             q -= 1
         if p <= q:
-            operations += 1
+            swap += 1
             T[p], T[q] = T[q], T[p]
             p += 1
             q -= 1
     if left < q:
-        quick_sort(T, left, q, operations, pivots)
+        quick_sort(T, left, q, comp, swap, pivots)
     if right > p:
-        quick_sort(T, p, right, operations, pivots)
+        quick_sort(T, p, right, comp, swap, pivots)
 
-    return T, pivots, operations
+    return T, pivots, comp, swap
 
 
 def heap2(list, n, i):
@@ -174,8 +177,3 @@ def merge_sort(list,porownania=0,scalania=0):
             k += 1
 
     return list,porownania,scalania
-
-
-T = [1,4,5,8,0,3,10,23,100,2]
-print(insertion_sort(T))
-print(merge_sort(T))
