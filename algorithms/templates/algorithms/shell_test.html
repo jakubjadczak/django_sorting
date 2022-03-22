@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <h1>Algorytm Shell Sort</h1> <br>
+    <h3>Podaj k - wartość początkowa(np. 100, >=10), m - mnożnik(np. 10) oraz i - liczbę iteracji(np. 4)</h3>
+     <form class="ui large form" method="post" action="{% url 'algor:shell_test' %}">
+    {% csrf_token %}
+      <div style="width:800px; margin:0 auto;">
+        <h4 class="mb-3">Wprowadź dane</h4>
+        <form class="needs-validation" novalidate="">
+            <div class="col-12">
+              <label for="k" class="form-label">K<span class="text-muted"></span></label>
+              <input type="number" class="form-control" id="k" name="k" placeholder="100" required="">
+
+              <label for="m" class="form-label">M<span class="text-muted"></span></label>
+              <input type="number" class="form-control" id="m" name="m" placeholder="10" required="">
+
+              <label for="i" class="form-label">I<span class="text-muted"></span></label>
+              <input type="number" class="form-control" id="i" name="i" placeholder="4" required="">
+    <br>
+    <button class="btn btn-primary btn-lg px-4 gap-3">Testuj</button><br><br>
+            </div>
+    </form>
+      </div>
+     </form>
+{% endblock %}

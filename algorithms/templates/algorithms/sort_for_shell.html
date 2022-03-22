@@ -35,11 +35,12 @@
 
     <div class="row align-items-md-stretch">
         <div class="h-100 p-5 text-white bg-dark rounded-3">
-          <h2>Czas w sekundach: </h2>
-          <h2>Liczba opercaji porównania: </h2>
-          <h3>Ciąg wejściowy: </h3>
-          <h3>Ciąg wyjściowy: </h3>
-          <h3>Wartość przyrostu: </h3>
+          <h2>Czas w sekundach: {{ time }}</h2>
+          <h2>Liczba opercaji porównania: {{ comp }}</h2>
+          <h2>Liczba zamian: {{ swap }}</h2>
+          <h3>Ciąg wejściowy: {{ unsorted_list }}</h3>
+          <h3>Ciąg wyjściowy: {{ sorted_list }}</h3>
+          <h3>Wartość przyrostu: {{ knuth }}</h3>
 
         </div>
       </div>
@@ -47,7 +48,7 @@
     <div class="px-4 py-5 my-5 text-center">
         <div class="col-lg-6 mx-auto">
           <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-            <a href="#" class="btn btn-primary btn-lg px-4 gap-3">Testy</a>
+            <a href="{% url 'algor:shell_test' %}" class="btn btn-primary btn-lg px-4 gap-3">Testy</a>
           </div>
         </div>
        </div>
