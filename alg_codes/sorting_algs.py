@@ -177,3 +177,4 @@ def merge_sort(list,porownania=0,scalania=0):
             k += 1
 
     return list,porownania,scalania
+
