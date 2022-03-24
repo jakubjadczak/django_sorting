@@ -1,7 +1,8 @@
 from django.urls import path
 from .views import (choose_alg, HeapSort, InsertionSort,
                     ShellSort, QuickSort, MergeSort,
-                    ShellSortTest, DisplayChart
+                    ShellSortTest, QuickSortTest, HeapSortTest,
+                    MergeSortTest, InsertionSortTest, DisplayChart,
                     )
 
 app_name = 'algor'
@@ -14,5 +15,9 @@ urlpatterns = [
     path('quick-sort/', QuickSort.as_view(), name='quick'),
     path('merge-sort/', MergeSort.as_view(), name='merge'),
     path('shell-test/', ShellSortTest.as_view(), name='shell_test'),
-    path('shell-chart/', DisplayChart.as_view(), name='display_chart'),
+    path('quick-test/', QuickSortTest.as_view(), name='quick_test'),
+    path('heap-test/', HeapSortTest.as_view(), name='heap_test'),
+    path('merge-test/', MergeSortTest.as_view(), name='merge_test'),
+    path('insertion-test/', InsertionSortTest.as_view(), name='insertion_test'),
+    path('chart/', DisplayChart.as_view(), name='display_chart'),
 ]

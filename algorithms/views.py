@@ -1,11 +1,10 @@
 from django.shortcuts import render, redirect
 from django.views import View
-from alg_codes.numbers_gen import DataGenerator
 from alg_codes.sorting_algs import shell_sort, quick_sort, insertion_sort, merge_sort, heap_sort
-import copy
 from django.contrib import messages
-import matplotlib.pyplot as plt
-from .utils import get_random_text, chart_gen
+from .utils import chart_gen, sort, sort_custom_seq
+
+global time, sorted_list, swap, comp, operations, pivots, scal, knuth, operation
 
 
 def choose_alg(request):
@@ -25,15 +24,7 @@ class HeapSort(View):
         length = request.POST.get('length')
 
         if seq:
-            seq = seq.split()
-            seq = [int(i) for i in seq]
-            temp = copy.deepcopy(seq)
-            result = heap_sort(seq)
-            sorted_list = result[0][0]
-            time = result[1]
-            comp = result[0][1]
-            swap = result[0][2]
-
+            sorted_list, comp, swap, time, temp = sort_custom_seq(seq, heap_sort)
             context = {
                 'time': time,
                 'comp': comp,
@@ -47,49 +38,11 @@ class HeapSort(View):
                 if length > 100_000_000:
                     messages.add_message(request, messages.ERROR, 'Proszę podać liczbę max do miliona')
                 else:
-                    dg = DataGenerator()
-                    if select_seq == 'A':
-                        T = dg.a_shape(length)
-                        result = heap_sort(T)
-                        time = result[1]
-                        comp = result[0][1]
-                        swap = result[0][2]
-                        sorted_list = '-----'
+                    time, comp, swap = sort(select_seq, length, heap_sort)
+                    sorted_list = '-----'
+            else:
+                messages.add_message(request, messages.ERROR, 'Prosze podać rodzaj ciągu')
 
-                    elif select_seq == 'V':
-                        T = dg.v_shape(length)
-                        result = heap_sort(T)
-                        time = result[1]
-                        comp = result[0][1]
-                        swap = result[0][2]
-                        sorted_list = '-----'
-
-                    elif select_seq == 'increase':
-                        T = dg.increase(length)
-                        result = heap_sort(T)
-                        time = result[1]
-                        comp = result[0][1]
-                        swap = result[0][2]
-                        sorted_list = '-----'
-
-                    elif select_seq == 'decrease':
-                        T = dg.decrease(length)
-                        result = heap_sort(T)
-                        time = result[1]
-                        comp = result[0][1]
-                        swap = result[0][2]
-                        sorted_list = '-----'
-
-                    elif select_seq == 'random':
-                        T = dg.random_number(length)
-                        result = heap_sort(T)
-                        time = result[1]
-                        comp = result[0][1]
-                        swap = result[0][2]
-                        sorted_list = '-----'
-
-                    else:
-                        messages.add_message(request, messages.ERROR, 'Prosze podać rodzaj ciągu')
             context = {
                 'time': time,
                 'comp': comp,
@@ -103,7 +56,6 @@ class HeapSort(View):
             template_name='algorithms/sort_for_heap.html',
             context=context
         )
-
 
     @staticmethod
     def get(request, *args, **kwargs):
@@ -123,14 +75,7 @@ class InsertionSort(View):
         length = request.POST.get('length')
 
         if seq:
-            seq = seq.split()
-            seq = [int(i) for i in seq]
-            temp = copy.deepcopy(seq)
-            result = insertion_sort(seq)
-            sorted_list = result[0][0]
-            time = result[1]
-            comp = result[0][1]
-            swap = result[0][2]
+            sorted_list, comp, swap, time, temp = sort_custom_seq(seq, insertion_sort)
 
             context = {
                 'time': time,
@@ -145,49 +90,11 @@ class InsertionSort(View):
                 if length > 100_000_000:
                     messages.add_message(request, messages.ERROR, 'Proszę podać liczbę max do miliona')
                 else:
-                    dg = DataGenerator()
-                    if select_seq == 'A':
-                        T = dg.a_shape(length)
-                        result = insertion_sort(T)
-                        time = result[1]
-                        comp = result[0][1]
-                        swap = result[0][2]
-                        sorted_list = '-----'
+                    time, comp, swap = sort(select_seq, length, insertion_sort)
+                    sorted_list = '-----'
+            else:
+                messages.add_message(request, messages.ERROR, 'Prosze podać rodzaj ciągu')
 
-                    elif select_seq == 'V':
-                        T = dg.v_shape(length)
-                        result = insertion_sort(T)
-                        time = result[1]
-                        comp = result[0][1]
-                        swap = result[0][2]
-                        sorted_list = '-----'
-
-                    elif select_seq == 'increase':
-                        T = dg.increase(length)
-                        result = insertion_sort(T)
-                        time = result[1]
-                        comp = result[0][1]
-                        swap = result[0][2]
-                        sorted_list = '-----'
-
-                    elif select_seq == 'decrease':
-                        T = dg.decrease(length)
-                        result = insertion_sort(T)
-                        time = result[1]
-                        comp = result[0][1]
-                        swap = result[0][2]
-                        sorted_list = '-----'
-
-                    elif select_seq == 'random':
-                        T = dg.random_number(length)
-                        result = insertion_sort(T)
-                        time = result[1]
-                        comp = result[0][1]
-                        swap = result[0][2]
-                        sorted_list = '-----'
-
-                    else:
-                        messages.add_message(request, messages.ERROR, 'Prosze podać rodzaj ciągu')
             context = {
                 'time': time,
                 'comp': comp,
@@ -220,14 +127,7 @@ class MergeSort(View):
         length = request.POST.get('length')
 
         if seq:
-            seq = seq.split()
-            seq = [int(i) for i in seq]
-            temp = copy.deepcopy(seq)
-            result = merge_sort(seq)
-            sorted_list = result[0][0]
-            time = result[1]
-            comp = result[0][1]
-            scal = result[0][2]
+            sorted_list, comp, scal, time, temp = sort_custom_seq(seq, merge_sort)
 
             context = {
                 'time': time,
@@ -242,49 +142,11 @@ class MergeSort(View):
                 if length > 100_000_000:
                     messages.add_message(request, messages.ERROR, 'Proszę podać liczbę max do miliona')
                 else:
-                    dg = DataGenerator()
-                    if select_seq == 'A':
-                        T = dg.a_shape(length)
-                        result = merge_sort(T)
-                        time = result[1]
-                        comp = result[0][1]
-                        scal = result[0][2]
-                        sorted_list = '-----'
+                    time, comp, scal = sort(select_seq, length, heap_sort)
+                    sorted_list = '-----'
+            else:
+                messages.add_message(request, messages.ERROR, 'Prosze podać rodzaj ciągu')
 
-                    elif select_seq == 'V':
-                        T = dg.v_shape(length)
-                        result = merge_sort(T)
-                        time = result[1]
-                        comp = result[0][1]
-                        scal = result[0][2]
-                        sorted_list = '-----'
-
-                    elif select_seq == 'increase':
-                        T = dg.increase(length)
-                        result = merge_sort(T)
-                        time = result[1]
-                        comp = result[0][1]
-                        scal = result[0][2]
-                        sorted_list = '-----'
-
-                    elif select_seq == 'decrease':
-                        T = dg.decrease(length)
-                        result = merge_sort(T)
-                        time = result[1]
-                        comp = result[0][1]
-                        scal = result[0][2]
-                        sorted_list = '-----'
-
-                    elif select_seq == 'random':
-                        T = dg.random_number(length)
-                        result = merge_sort(T)
-                        time = result[1]
-                        comp = result[0][1]
-                        scal = result[0][2]
-                        sorted_list = '-----'
-
-                    else:
-                        messages.add_message(request, messages.ERROR, 'Prosze podać rodzaj ciągu')
             context = {
                 'time': time,
                 'comp': comp,
@@ -298,7 +160,6 @@ class MergeSort(View):
             template_name='algorithms/sort_for_merge.html',
             context=context
         )
-
 
     @staticmethod
     def get(request, *args, **kwargs):
@@ -318,15 +179,7 @@ class QuickSort(View):
         length = request.POST.get('length')
 
         if seq:
-            seq = seq.split()
-            seq = [int(i) for i in seq]
-            temp = copy.deepcopy(seq)
-            result = quick_sort(seq, 0, len(seq) - 1)
-            sorted_list = result[0][0]
-            pivots = result[0][1]
-            comp = result[0][2]
-            swap = result[0][3]
-            time = result[1]
+            sorted_list, comp, swap, pivots, time, temp = sort_custom_seq(seq, quick_sort)
 
             context = {
                 'time': time,
@@ -342,54 +195,9 @@ class QuickSort(View):
                 if length > 100_000_000:
                     messages.add_message(request, messages.ERROR, 'Proszę podać liczbę max do miliona')
                 else:
-                    dg = DataGenerator()
-                    if select_seq == 'A':
-                        T = dg.a_shape(length)
-                        result = quick_sort(T, 0, len(T) - 1)
-                        time = result[1]
-                        pivots = result[0][1]
-                        comp = result[0][2]
-                        swap = result[0][3]
-                        sorted_list = '-----'
-
-                    elif select_seq == 'V':
-                        T = dg.v_shape(length)
-                        result = quick_sort(T, 0, len(T) - 1)
-                        time = result[1]
-                        pivots = result[0][1]
-                        comp = result[0][2]
-                        swap = result[0][3]
-                        sorted_list = '-----'
-
-                    elif select_seq == 'increase':
-                        T = dg.increase(length)
-                        result = quick_sort(T, 0, len(T) - 1)
-                        time = result[1]
-                        pivots = result[0][1]
-                        comp = result[0][2]
-                        swap = result[0][3]
-                        sorted_list = '-----'
-
-                    elif select_seq == 'decrease':
-                        T = dg.decrease(length)
-                        result = quick_sort(T, 0, len(T) - 1)
-                        time = result[1]
-                        pivots = result[0][1]
-                        comp = result[0][2]
-                        swap = result[0][3]
-                        sorted_list = '-----'
-
-                    elif select_seq == 'random':
-                        T = dg.random_number(length)
-                        result = quick_sort(T, 0, len(T) - 1)
-                        time = result[1]
-                        pivots = result[0][1]
-                        comp = result[0][2]
-                        swap = result[0][3]
-                        sorted_list = '-----'
-
-                    else:
-                        messages.add_message(request, messages.ERROR, 'Prosze podać rodzaj ciągu')
+                    time, comp, swap = sort(select_seq, length, quick_sort)
+            else:
+                messages.add_message(request, messages.ERROR, 'Prosze podać rodzaj ciągu')
 
             context = {
                 'time': time,
@@ -424,15 +232,7 @@ class ShellSort(View):
         length = request.POST.get('length')
 
         if seq:
-            seq = seq.split()
-            seq = [int(i) for i in seq]
-            temp = copy.deepcopy(seq)
-            result = shell_sort(seq)
-            sorted_list = result[0][0]
-            knuth = result[0][1]
-            comp = result[0][2]
-            swap = result[0][3]
-            time = result[1]
+            sorted_list, comp, swap, knuth, time, temp = sort_custom_seq(seq, quick_sort)
             context = {
                 'time': time,
                 'comp': comp,
@@ -447,54 +247,12 @@ class ShellSort(View):
                 if length > 100_000_000:
                     messages.add_message(request, messages.ERROR, 'Proszę podać liczbę max do miliona')
                 else:
-                    dg = DataGenerator()
-                    if select_seq == 'A':
-                        T = dg.a_shape(length)
-                        result = shell_sort(T)
-                        time = result[1]
-                        knuth = result[0][1]
-                        comp = result[0][2]
-                        swap = result[0][3]
-                        sorted_list = '-----'
+                    time, comp, swap = sort(select_seq, length, heap_sort)
+                    sorted_list = '-----'
 
-                    elif select_seq == 'V':
-                        T = dg.v_shape(length)
-                        result = shell_sort(T)
-                        time = result[1]
-                        knuth = result[0][1]
-                        comp = result[0][2]
-                        swap = result[0][3]
-                        sorted_list = '-----'
+            else:
+                messages.add_message(request, messages.ERROR, 'Prosze podać rodzaj ciągu')
 
-                    elif select_seq == 'increase':
-                        T = dg.increase(length)
-                        result = shell_sort(T)
-                        time = result[1]
-                        knuth = result[0][1]
-                        comp = result[0][2]
-                        swap = result[0][3]
-                        sorted_list = '-----'
-
-                    elif select_seq == 'decrease':
-                        T = dg.decrease(length)
-                        result = shell_sort(T)
-                        time = result[1]
-                        knuth = result[0][1]
-                        comp = result[0][2]
-                        swap = result[0][3]
-                        sorted_list = '-----'
-
-                    elif select_seq == 'random':
-                        T = dg.random_number(length)
-                        result = shell_sort(T)
-                        time = result[1]
-                        knuth = result[0][1]
-                        comp = result[0][2]
-                        swap = result[0][3]
-                        sorted_list = '-----'
-
-                    else:
-                        messages.add_message(request, messages.ERROR, 'Prosze podać rodzaj ciągu')
             context = {
                 'time': time,
                 'comp': comp,
@@ -518,97 +276,6 @@ class ShellSort(View):
         )
 
 
-class ComparisonTest(View):
-    @staticmethod
-    def post(request, *args, **kwargs):
-        k = request.POST.get('k')
-        m = request.POST.get('m')
-        i = request.POST.get('i')
-
-        k = int(k)
-        m = int(m)
-        n = int(i)
-
-        shell_times = []
-        quick_times = []
-        seq_length = []
-        dg = DataGenerator()
-
-        for _ in range(n):
-            avg_time_shell = 0
-            avg_time_quick = 0
-
-            for _ in range(2):
-                T = dg.a_shape(k)
-                result_shell = shell_sort(T)
-                result_quick = quick_sort(T, 0, len(T) - 1)
-                avg_time_shell += result_shell[1]
-                avg_time_quick += result_quick[1]
-
-            for _ in range(2):
-                T = dg.v_shape(k)
-                result_shell = shell_sort(T)
-                result_quick = quick_sort(T, 0, len(T) - 1)
-                avg_time_shell += result_shell[1]
-                avg_time_quick += result_quick[1]
-
-            for _ in range(2):
-                T = dg.increase(k)
-                result_shell = shell_sort(T)
-                result_quick = quick_sort(T, 0, len(T) - 1)
-                avg_time_shell += result_shell[1]
-                avg_time_quick += result_quick[1]
-
-            for _ in range(2):
-                T = dg.decrease(k)
-                result_shell = shell_sort(T)
-                result_quick = quick_sort(T, 0, len(T) - 1)
-                avg_time_shell += result_shell[1]
-                avg_time_quick += result_quick[1]
-
-            for _ in range(2):
-                T = dg.random_number(k)
-                result_shell = shell_sort(T)
-                result_quick = quick_sort(T, 0, len(T) - 1)
-                avg_time_shell += result_shell[1]
-                avg_time_quick += result_quick[1]
-
-            seq_length.append(k)
-            shell_times.append(avg_time_shell / 10)
-            quick_times.append(avg_time_quick / 10)
-            k *= m
-
-        chart_title = get_random_text()
-
-        fig_shell, ax_shell = plt.subplots()
-        ax_shell.plot(shell_times, seq_length, 'ro')
-        ax_shell.set(xlabel='Czas(s)', ylabel='Wielkość ciągu', title='Czas sortowania - Shell Sort')
-        ax_shell.grid()
-        fig_shell.savefig(f'media/Shell_Sort_{chart_title}.png')
-
-        fig_quick, ax_quick = plt.subplots()
-        ax_quick.plot(quick_times, seq_length, 'ro')
-        ax_quick.set(xlabel='Czas(s)', ylabel='Wielkość ciągu', title='Czas sortowania - Shell Sort')
-        ax_quick.grid()
-        fig_quick.savefig(f'media/Quick_Sort_{chart_title}.png')
-        # image = Image.objects.create(title)
-        # image.save()
-        # plt.show()
-
-        request.session['shell_chart'] = f'Shell_Sort_{chart_title}'
-        request.session['quick_chart'] = f'QuickSort_{chart_title}'
-
-        return redirect('algor:display_chart')
-
-    @staticmethod
-    def get(request, *args, **kwargs):
-
-        return render(
-            request=request,
-            template_name='algorithms/comparison_test.html',
-        )
-
-
 class ShellSortTest(View):
 
     @staticmethod
@@ -622,8 +289,136 @@ class ShellSortTest(View):
         n = int(i)
 
         if k >= 10:
-            chart_title = chart_gen(k,m,n,shell_sort)
+            chart_title = chart_gen(k, m, n, shell_sort)
             request.session['chart'] = f'Shell_Sort_{chart_title}.png'
+            return redirect('algor:display_chart')
+        else:
+            messages.add_message(request, messages.ERROR, 'K musi być większe lub równe 10')
+            return render(
+                request=request,
+                template_name='algorithms/shell_test.html'
+            )
+
+    @staticmethod
+    def get(request, *args, **kwargs):
+
+        return render(
+            request=request,
+            template_name='algorithms/shell_test.html',
+        )
+
+
+class MergeSortTest(View):
+
+    @staticmethod
+    def post(request, *args, **kwargs):
+        k = request.POST.get('k')
+        m = request.POST.get('m')
+        i = request.POST.get('i')
+
+        k = int(k)
+        m = int(m)
+        n = int(i)
+
+        if k >= 10:
+            chart_title = chart_gen(k, m, n, merge_sort)
+            request.session['chart'] = f'Merge_Sort_{chart_title}.png'
+            return redirect('algor:display_chart')
+        else:
+            messages.add_message(request, messages.ERROR, 'K musi być większe lub równe 10')
+            return render(
+                request=request,
+                template_name='algorithms/shell_test.html'
+            )
+
+    @staticmethod
+    def get(request, *args, **kwargs):
+
+        return render(
+            request=request,
+            template_name='algorithms/shell_test.html',
+        )
+
+
+class QuickSortTest(View):
+
+    @staticmethod
+    def post(request, *args, **kwargs):
+        k = request.POST.get('k')
+        m = request.POST.get('m')
+        i = request.POST.get('i')
+
+        k = int(k)
+        m = int(m)
+        n = int(i)
+
+        if k >= 10:
+            chart_title = chart_gen(k, m, n, quick_sort)
+            request.session['chart'] = f'Quick_Sort_{chart_title}.png'
+            return redirect('algor:display_chart')
+        else:
+            messages.add_message(request, messages.ERROR, 'K musi być większe lub równe 10')
+            return render(
+                request=request,
+                template_name='algorithms/shell_test.html'
+            )
+
+    @staticmethod
+    def get(request, *args, **kwargs):
+
+        return render(
+            request=request,
+            template_name='algorithms/shell_test.html',
+        )
+
+
+class HeapSortTest(View):
+
+    @staticmethod
+    def post(request, *args, **kwargs):
+        k = request.POST.get('k')
+        m = request.POST.get('m')
+        i = request.POST.get('i')
+
+        k = int(k)
+        m = int(m)
+        n = int(i)
+
+        if k >= 10:
+            chart_title = chart_gen(k, m, n, heap_sort)
+            request.session['chart'] = f'Heap_Sort_{chart_title}.png'
+            return redirect('algor:display_chart')
+        else:
+            messages.add_message(request, messages.ERROR, 'K musi być większe lub równe 10')
+            return render(
+                request=request,
+                template_name='algorithms/shell_test.html'
+            )
+
+    @staticmethod
+    def get(request, *args, **kwargs):
+
+        return render(
+            request=request,
+            template_name='algorithms/shell_test.html',
+        )
+
+
+class InsertionSortTest(View):
+
+    @staticmethod
+    def post(request, *args, **kwargs):
+        k = request.POST.get('k')
+        m = request.POST.get('m')
+        i = request.POST.get('i')
+
+        k = int(k)
+        m = int(m)
+        n = int(i)
+
+        if k >= 10:
+            chart_title = chart_gen(k, m, n, insertion_sort)
+            request.session['chart'] = f'Insertion_Sort_{chart_title}.png'
             return redirect('algor:display_chart')
         else:
             messages.add_message(request, messages.ERROR, 'K musi być większe lub równe 10')
@@ -658,24 +453,3 @@ class DisplayChart(View):
             template_name='algorithms/display_chart.html',
             context={'name': title}
         )
-
-
-class DisplayCharts(View):
-
-    @staticmethod
-    def post(request, *args, **kwargs):
-        return render(
-            request=request,
-            template_name='algorithms/display_chart.html'
-        )
-
-    @staticmethod
-    def get(request, *args, **kwargs):
-        titles = [request.session['shell_chart'], request.session['quick_chart']]
-
-        return render(
-            request=request,
-            template_name='algorithms/display_chart.html',
-            context={'titles': titles}
-        )
-
