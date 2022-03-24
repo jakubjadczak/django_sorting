@@ -3,7 +3,6 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-    <h1>Algorytm Shell Sort</h1> <br>
     <h3>Podaj k - wartość początkowa(np. 100, >=10), m - mnożnik(np. 10) oraz i - liczbę iteracji(np. 4)</h3>
      <form class="ui large form" method="post" action="{% url 'algor:shell_test' %}">
     {% csrf_token %}

@@ -43,11 +43,11 @@ def shell_sort(T: list):
             T[j] = mem
         knuth //= 3
 
-    return T, knuths, comp, swap
+    return T, comp, swap, knuths
 
 
 @delta_time
-def quick_sort(T, left, right, comp=0, swap=0, pivots=None):
+def _quick_sort(T, left, right, comp=0, swap=0, pivots=None):
     if pivots is None:
         pivots = []
 
@@ -67,91 +67,91 @@ def quick_sort(T, left, right, comp=0, swap=0, pivots=None):
             p += 1
             q -= 1
     if left < q:
-        quick_sort(T, left, q, comp, swap, pivots)
+        _quick_sort(T, left, q, comp, swap, pivots)
     if right > p:
-        quick_sort(T, p, right, comp, swap, pivots)
+        _quick_sort(T, p, right, comp, swap, pivots)
 
-    return T, pivots, comp, swap
+    return T, comp, swap, pivots
+
+
+def quick_sort(T):
+    return _quick_sort(T, 0, len(T)-1)
 
 
 def heap2(list, n, i):
-    p = 0
-    z = 0
-    por = 0
-    zam = 0
+    comp = 0
+    swap = 0
     dad = i
     l = 2*i + 1
     r = 2*i + 2
 
     if l < n and list[i] > list[l]:
-        por += 1
+        comp += 1
         dad = l
 
     if r < n and list[dad] > list[r]:
-        por += 1
+        comp += 1
         dad = r
 
     if dad != i:
-        zam += 1
+        swap += 1
         list[i], list[dad] = list[dad], list[i]
-        list,p,z = heap2(list, n, dad)
-        por += p
-        zam += z
-    return list,por,zam
+        list, p, z = heap2(list, n, dad)
+        comp += p
+        swap += z
+    return list, comp, swap
 
 
 @delta_time
 def heap_sort(list):
-    por = 0
-    zam = 0
-    p = 0
-    z = 0
+    comp = 0
+    swap = 0
     n = len(list)
 
     for i in range(n//2, -1, -1):
-        list,p,z = heap2(list, n, i)
-        por += p
-        zam += z
+        list, p, z = heap2(list, n, i)
+        comp += p
+        swap += z
 
     for i in range(n-1, 0, -1):
-        zam += 1
+        swap += 1
         list[i], list[0] = list[0], list[i]
-        list,p,z = heap2(list, i, 0)
-        por += p
-        zam += z
+        list, p, z = heap2(list, i, 0)
+        comp += p
+        swap += z
 
-    return list,por,zam
+    return list, comp, swap
 
 
 @delta_time
 def insertion_sort(list):
     comp = 0
-    zamiana = 0
+    swap = 0
     for i in range(1, len(list)):
         remember = list[i]
         j = i - 1
-        comp+=1
+        comp += 1
         while j >= 0 and remember > list[j]:
-            comp+=1
-            zamiana+=1
+            comp += 1
+            swap += 1
             list[j + 1] = list[j]
             j = j - 1
         list[j+1] = remember
-    return list, comp, zamiana
+    return list, comp, swap
 
 
 @delta_time
-def merge_sort(list,porownania=0,scalania=0):
+def merge_sort(list, comp=0, scal=0):
     if len(list) > 1:
         middle = len(list)//2
         left = list[:middle]
         right = list[middle:]
-        merge_sort(left,porownania,scalania)
-        merge_sort(right,porownania,scalania)
+        merge_sort(left, comp, scal)
+        merge_sort(right, comp, scal)
         i = 0
         j = 0
         k = 0
-        porownania +=1
+        comp += 1
         while i < len(left) and j < len(right):
             if left[i] > right[j]:
                 list[k] = left[i]
@@ -160,21 +160,20 @@ def merge_sort(list,porownania=0,scalania=0):
                 list[k] = right[j]
                 j += 1
             k += 1
-            porownania +=1
-            scalania += 1
-        porownania +=1
+            comp += 1
+            scal += 1
+        comp += 1
         while i < len(left):
-            porownania += 1
+            comp += 1
             list[k] = left[i]
             i += 1
             k += 1
 
-        porownania += 1
+        comp += 1
         while j < len(right):
-            porownania += 1
+            comp += 1
             list[k] = right[j]
             j += 1
             k += 1
 
-    return list,porownania,scalania
-
+    return list, comp, scal
