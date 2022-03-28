@@ -57,5 +57,3 @@ class DataGenerator:
             T.append(random.randint(1, 10*n))
 
         return T
-
-g = DataGenerator()
