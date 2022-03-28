@@ -17,7 +17,6 @@ class Migration(migrations.Migration):
             name='Image',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('chart', sorl.thumbnail.fields.ImageField(upload_to=algorithms.models.upload_to, verbose_name='wykres')),
             ],
         ),
     ]
