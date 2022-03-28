@@ -10,7 +10,7 @@ def get_random_text():
     return ''.join(random.choice(letters) for _ in range(6))
 
 
-def chart_gen(k, m, n, func):
+def chart_gen(start, step, stop, func, name):
     times_a = []
     times_v = []
     times_in = []
@@ -18,41 +18,46 @@ def chart_gen(k, m, n, func):
     times_ran = []
     seq_length = []
     dg = DataGenerator()
+    k = start
+    while k < stop:
 
-    for _ in range(n):
         avg_time = 0
         for _ in range(10):
             T = dg.a_shape(k)
             result = func(T)
-            avg_time += result[0][1] + result[0][2]
+            avg_time += result[1]
         times_a.append(avg_time / 10)
 
+        avg_time = 0
         for _ in range(10):
             T = dg.v_shape(k)
             result = func(T)
-            avg_time += result[0][1] + result[0][2]
+            avg_time += result[1]
         times_v.append(avg_time / 10)
 
+        avg_time = 0
         for _ in range(10):
             T = dg.increase(k)
             result = func(T)
-            avg_time += result[0][1] + result[0][2]
+            avg_time += result[1]
         times_in.append(avg_time / 10)
 
+        avg_time = 0
         for _ in range(10):
             T = dg.decrease(k)
             result = func(T)
-            avg_time += result[0][1] + result[0][2]
+            avg_time += result[1]
         times_dc.append(avg_time / 10)
 
+        avg_time = 0
         for _ in range(10):
             T = dg.random_number(k)
             result = func(T)
-            avg_time += result[0][1] + result[0][2]
+            avg_time += result[1]
         times_ran.append(avg_time / 10)
 
         seq_length.append(k)
-        k *= m
+        k += step
 
     fig, ax = plt.subplots()
 
@@ -67,7 +72,7 @@ def chart_gen(k, m, n, func):
 
     chart_title = get_random_text()
 
-    fig.savefig(f'media/Shell_Sort_{chart_title}.png')
+    fig.savefig(f'media/{name}_sort_{chart_title}.png')
 
     return chart_title
 
@@ -117,7 +122,7 @@ def sort(select_seq:str, length: int, func):
 
 
 def sort_custom_seq(seq, func):
-    seq= seq.split()
+    seq = seq.split()
     try:
         seq = [int(i) for i in seq]
     except ValueError:

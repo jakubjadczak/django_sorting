@@ -3,9 +3,9 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-    <h1>Algorytm Shell Sort</h1> <br>
+    <h1>Algorytm Insertion Sort</h1> <br>
     <h3>Podaj start, krok i stop</h3>
-     <form class="ui large form" method="post" action="{% url 'algor:shell_test' %}">
+     <form class="ui large form" method="post" action="{% url 'algor:insertion_test' %}">
     {% csrf_token %}
       <div style="width:800px; margin:0 auto;">
         <h4 class="mb-3">Wprowadź dane</h4>

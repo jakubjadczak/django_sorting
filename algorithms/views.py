@@ -280,18 +280,17 @@ class ShellSortTest(View):
 
     @staticmethod
     def post(request, *args, **kwargs):
-        print('shell')
-        k = request.POST.get('k')
-        m = request.POST.get('m')
-        i = request.POST.get('i')
+        start = request.POST.get('start')
+        step = request.POST.get('step')
+        stop = request.POST.get('stop')
 
-        k = int(k)
-        m = int(m)
-        n = int(i)
+        start = int(start)
+        step = int(step)
+        stop = int(stop)
 
-        if k >= 10:
-            chart_title = chart_gen(k, m, n, shell_sort)
-            request.session['chart'] = f'Shell_Sort_{chart_title}.png'
+        if start >= 10:
+            chart_title = chart_gen(start, step, stop, shell_sort, 'shell')
+            request.session['chart'] = f'shell_sort_{chart_title}.png'
             return redirect('algor:display_chart')
         else:
             messages.add_message(request, messages.ERROR, 'K musi być większe lub równe 10')
@@ -313,24 +312,23 @@ class MergeSortTest(View):
 
     @staticmethod
     def post(request, *args, **kwargs):
-        print('merge')
-        k = request.POST.get('k')
-        m = request.POST.get('m')
-        i = request.POST.get('i')
+        start = request.POST.get('start')
+        step = request.POST.get('step')
+        stop = request.POST.get('stop')
 
-        k = int(k)
-        m = int(m)
-        n = int(i)
+        start = int(start)
+        step = int(step)
+        stop = int(stop)
 
-        if k >= 10:
-            chart_title = chart_gen(k, m, n, merge_sort)
-            request.session['chart'] = f'Shell_Sort_{chart_title}.png'
+        if start >= 10:
+            chart_title = chart_gen(start, step, stop, merge_sort, 'merge')
+            request.session['chart'] = f'merge_sort_{chart_title}.png'
             return redirect('algor:display_chart')
         else:
             messages.add_message(request, messages.ERROR, 'K musi być większe lub równe 10')
             return render(
                 request=request,
-                template_name='algorithms/shell_test.html'
+                template_name='algorithms/merge_test.html'
             )
 
     @staticmethod
@@ -338,7 +336,7 @@ class MergeSortTest(View):
 
         return render(
             request=request,
-            template_name='algorithms/shell_test.html',
+            template_name='algorithms/merge_test.html',
         )
 
 
@@ -346,23 +344,23 @@ class QuickSortTest(View):
 
     @staticmethod
     def post(request, *args, **kwargs):
-        k = request.POST.get('k')
-        m = request.POST.get('m')
-        i = request.POST.get('i')
+        start = request.POST.get('start')
+        step = request.POST.get('step')
+        stop = request.POST.get('stop')
 
-        k = int(k)
-        m = int(m)
-        n = int(i)
+        start = int(start)
+        step = int(step)
+        stop = int(stop)
 
-        if k >= 10:
-            chart_title = chart_gen(k, m, n, quick_sort)
-            request.session['chart'] = f'Quick_Sort_{chart_title}.png'
+        if start >= 10:
+            chart_title = chart_gen(start, step, stop, quick_sort, 'quick')
+            request.session['chart'] = f'quick_sort_{chart_title}.png'
             return redirect('algor:display_chart')
         else:
             messages.add_message(request, messages.ERROR, 'K musi być większe lub równe 10')
             return render(
                 request=request,
-                template_name='algorithms/shell_test.html'
+                template_name='algorithms/quick_test.html'
             )
 
     @staticmethod
@@ -370,7 +368,7 @@ class QuickSortTest(View):
 
         return render(
             request=request,
-            template_name='algorithms/shell_test.html',
+            template_name='algorithms/quick_test.html',
         )
 
 
@@ -378,24 +376,23 @@ class HeapSortTest(View):
 
     @staticmethod
     def post(request, *args, **kwargs):
-        print('heap')
-        k = request.POST.get('k')
-        m = request.POST.get('m')
-        i = request.POST.get('i')
+        start = request.POST.get('start')
+        step = request.POST.get('step')
+        stop = request.POST.get('stop')
 
-        k = int(k)
-        m = int(m)
-        n = int(i)
+        start = int(start)
+        step = int(step)
+        stop = int(stop)
 
-        if k >= 10:
-            chart_title = chart_gen(k, m, n, heap_sort)
-            request.session['chart'] = f'Heap_Sort_{chart_title}.png'
+        if start >= 10:
+            chart_title = chart_gen(start, step, stop, heap_sort, 'heap')
+            request.session['chart'] = f'heap_sort_{chart_title}.png'
             return redirect('algor:display_chart')
         else:
             messages.add_message(request, messages.ERROR, 'K musi być większe lub równe 10')
             return render(
                 request=request,
-                template_name='algorithms/shell_test.html'
+                template_name='algorithms/heap_test.html'
             )
 
     @staticmethod
@@ -403,7 +400,7 @@ class HeapSortTest(View):
 
         return render(
             request=request,
-            template_name='algorithms/shell_test.html',
+            template_name='algorithms/heap_test.html',
         )
 
 
@@ -411,24 +408,23 @@ class InsertionSortTest(View):
 
     @staticmethod
     def post(request, *args, **kwargs):
-        print('ins')
-        k = request.POST.get('k')
-        m = request.POST.get('m')
-        i = request.POST.get('i')
+        start = request.POST.get('start')
+        step = request.POST.get('step')
+        stop = request.POST.get('stop')
 
-        k = int(k)
-        m = int(m)
-        n = int(i)
+        start = int(start)
+        step = int(step)
+        stop = int(stop)
 
-        if k >= 10:
-            chart_title = chart_gen(k, m, n, insertion_sort)
-            request.session['chart'] = f'Insertion_Sort_{chart_title}.png'
+        if start >= 10:
+            chart_title = chart_gen(start, step, stop, insertion_sort, 'insertion')
+            request.session['chart'] = f'insertion_sort_{chart_title}.png'
             return redirect('algor:display_chart')
         else:
             messages.add_message(request, messages.ERROR, 'K musi być większe lub równe 10')
             return render(
                 request=request,
-                template_name='algorithms/shell_test.html'
+                template_name='algorithms/insertion_test.html'
             )
 
     @staticmethod
@@ -436,7 +432,7 @@ class InsertionSortTest(View):
 
         return render(
             request=request,
-            template_name='algorithms/shell_test.html',
+            template_name='algorithms/insertion_test.html',
         )
 
 
