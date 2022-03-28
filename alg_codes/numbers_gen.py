@@ -20,7 +20,11 @@ class DataGenerator:
     @staticmethod
     def __increase(n: int):
         T = []
-        start = random.randint(1, n//10)
+        try:
+            start = random.randint(1, n//10)
+        except ValueError:
+            start = 1
+
         T.append(start)
         for _ in range(n//2-1):
             num = random.randint(start+1, start+random.randint(2, n//2))
