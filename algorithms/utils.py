@@ -24,31 +24,31 @@ def chart_gen(k, m, n, func):
         for _ in range(10):
             T = dg.a_shape(k)
             result = func(T)
-            avg_time += result[1]
+            avg_time += result[0][1] + result[0][2]
         times_a.append(avg_time / 10)
 
         for _ in range(10):
             T = dg.v_shape(k)
             result = func(T)
-            avg_time += result[1]
+            avg_time += result[0][1] + result[0][2]
         times_v.append(avg_time / 10)
 
         for _ in range(10):
             T = dg.increase(k)
             result = func(T)
-            avg_time += result[1]
+            avg_time += result[0][1] + result[0][2]
         times_in.append(avg_time / 10)
 
         for _ in range(10):
             T = dg.decrease(k)
             result = func(T)
-            avg_time += result[1]
+            avg_time += result[0][1] + result[0][2]
         times_dc.append(avg_time / 10)
 
         for _ in range(10):
             T = dg.random_number(k)
             result = func(T)
-            avg_time += result[1]
+            avg_time += result[0][1] + result[0][2]
         times_ran.append(avg_time / 10)
 
         seq_length.append(k)
@@ -56,13 +56,13 @@ def chart_gen(k, m, n, func):
 
     fig, ax = plt.subplots()
 
-    a_shape, = ax.plot(times_a, seq_length, label='Ciągi A')
-    v_shape, = ax.plot(times_v, seq_length, label='Ciągi V')
-    incr, = ax.plot(times_in, seq_length, label='Ciągi rosnące')
-    dcr, = ax.plot(times_dc, seq_length, label='Ciągi malejące')
-    random, = ax.plot(times_ran, seq_length, label='Ciągi losowe')
+    a_shape, = ax.plot(seq_length, times_a, label='Ciągi A')
+    v_shape, = ax.plot(seq_length, times_v, label='Ciągi V')
+    incr, = ax.plot(seq_length, times_in, label='Ciągi rosnące')
+    dcr, = ax.plot(seq_length, times_dc, label='Ciągi malejące')
+    random, = ax.plot( seq_length, times_ran, label='Ciągi losowe')
 
-    ax.set(xlabel='Czas(s)', ylabel='Wielkość ciągu', title='Czas sortowania - Shell Sort')
+    ax.set(xlabel='Wielkość ciągu', ylabel='Liczba operacji', title='Czas sortowania')
     ax.legend()
 
     chart_title = get_random_text()
@@ -118,7 +118,11 @@ def sort(select_seq:str, length: int, func):
 
 def sort_custom_seq(seq, func):
     seq= seq.split()
-    seq = [int(i) for i in seq]
+    try:
+        seq = [int(i) for i in seq]
+    except ValueError:
+        pass
+
     temp = copy.deepcopy(seq)
     result = func(seq)
 

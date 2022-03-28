@@ -280,6 +280,7 @@ class ShellSortTest(View):
 
     @staticmethod
     def post(request, *args, **kwargs):
+        print('shell')
         k = request.POST.get('k')
         m = request.POST.get('m')
         i = request.POST.get('i')
@@ -312,6 +313,7 @@ class MergeSortTest(View):
 
     @staticmethod
     def post(request, *args, **kwargs):
+        print('merge')
         k = request.POST.get('k')
         m = request.POST.get('m')
         i = request.POST.get('i')
@@ -322,7 +324,7 @@ class MergeSortTest(View):
 
         if k >= 10:
             chart_title = chart_gen(k, m, n, merge_sort)
-            request.session['chart'] = f'Merge_Sort_{chart_title}.png'
+            request.session['chart'] = f'Shell_Sort_{chart_title}.png'
             return redirect('algor:display_chart')
         else:
             messages.add_message(request, messages.ERROR, 'K musi być większe lub równe 10')
@@ -376,6 +378,7 @@ class HeapSortTest(View):
 
     @staticmethod
     def post(request, *args, **kwargs):
+        print('heap')
         k = request.POST.get('k')
         m = request.POST.get('m')
         i = request.POST.get('i')
@@ -408,6 +411,7 @@ class InsertionSortTest(View):
 
     @staticmethod
     def post(request, *args, **kwargs):
+        print('ins')
         k = request.POST.get('k')
         m = request.POST.get('m')
         i = request.POST.get('i')

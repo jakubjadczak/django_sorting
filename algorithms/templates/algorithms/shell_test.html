@@ -4,7 +4,7 @@
 
 {% block content %}
     <h3>Podaj k - wartość początkowa(np. 100, >=10), m - mnożnik(np. 10) oraz i - liczbę iteracji(np. 4)</h3>
-     <form class="ui large form" method="post" action="{% url 'algor:shell_test' %}">
+     <form class="ui large form" method="post" action="{% url 'algor:insertion_test' %}">
     {% csrf_token %}
       <div style="width:800px; margin:0 auto;">
         <h4 class="mb-3">Wprowadź dane</h4>

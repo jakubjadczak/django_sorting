@@ -15,6 +15,7 @@ def delta_time(func):
 
 @delta_time
 def shell_sort(T: list):
+    # print('shell')
     comp = 0
     swap = 0
     knuth = 1
@@ -75,6 +76,7 @@ def _quick_sort(T, left, right, comp=0, swap=0, pivots=None):
 
 
 def quick_sort(T):
+    # print('quick')
     return _quick_sort(T, 0, len(T)-1)
 
 
@@ -104,6 +106,7 @@ def heap2(list, n, i):
 
 @delta_time
 def heap_sort(list):
+    # print('heap')
     comp = 0
     swap = 0
     n = len(list)
@@ -125,6 +128,7 @@ def heap_sort(list):
 
 @delta_time
 def insertion_sort(list):
+    # print('inst')
     comp = 0
     swap = 0
     for i in range(1, len(list)):
@@ -142,6 +146,7 @@ def insertion_sort(list):
 
 @delta_time
 def merge_sort(list, comp=0, scal=0):
+    # print('merge')
     if len(list) > 1:
         middle = len(list)//2
         left = list[:middle]
