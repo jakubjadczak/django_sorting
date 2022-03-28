@@ -447,7 +447,11 @@ class DisplayChart(View):
 
     @staticmethod
     def get(request, *args, **kwargs):
-        title = request.session['chart']
+        try:
+            title = request.session['chart']
+        except KeyError:
+            title = ''
+
         return render(
             request=request,
             template_name='algorithms/display_chart.html',
